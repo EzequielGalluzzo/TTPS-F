@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
 
-@Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
-})
+import { AccountService } from './_services/account.service';
+import { User } from './_models/users';
+
+@Component({ selector: 'app-root', templateUrl: 'app.component.html' })
 export class AppComponent {
-  title = 'proyectoRivasGalluzzo';
+    user?: User | null;
+
+    constructor(private accountService: AccountService) {
+        this.accountService.user.subscribe(x => this.user = x);
+    }
+
+    logout() {
+        this.accountService.logout();
+    }
 }
